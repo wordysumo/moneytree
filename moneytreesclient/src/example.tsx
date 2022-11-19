@@ -20,10 +20,11 @@ export const Example = (props) => {
                 </div>
             )}
       <div className="buttons">        
-        <button className="mainButton" disabled={!props.canWater} onClick={props.water}>Water</button>                
-        <button className="mainButton" onClick={props.feed}>Feed</button>                
-        <button className="mainButton">Catch</button>      
-        <button className="mainButton">Donate</button>   
+      {props.plantExists && <button className="mainButton" disabled={!props.canWater} onClick={props.water}>Water</button>  }              
+        {props.plantExists && <button className="mainButton" onClick={props.feed}>Feed</button>   }             
+        {props.plantExists && <button className="mainButton">Catch</button>      }
+        {props.plantExists && <button className="mainButton">Donate</button> }  
+        {!props.plantExists && <button onClick={props.create} className="mainButton">create plant</button>}
       </div>
       </div>
       </div>

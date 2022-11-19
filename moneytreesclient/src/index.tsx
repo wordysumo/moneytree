@@ -40,7 +40,11 @@ const App = () => {
         await fetchPlantData()
     }
     async function water() {
+        try {
         await waterPlant()
+        }catch(err) {
+            alert("already watered")
+        }
         await fetchPlantData()
         setBalance(await getBalance())
     }
@@ -58,7 +62,7 @@ const App = () => {
             
             
 
-            <Example plant={plant} plantExists={plantExists} water={water} feed={feed} canWater={canWater} />
+            <Example plant={plant} plantExists={plantExists} water={water} feed={feed} canWater={canWater} create={createPlant} />
         </div>
     )
 
