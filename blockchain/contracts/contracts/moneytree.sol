@@ -26,6 +26,9 @@ contract Moneytrees is Leaves {
         ownerPlant[msg.sender] = newId;
         return true;
     }
+    function hasPlant() public view returns (bool) {
+        return ownerPlant[msg.sender] != 0;
+    }
     function waterPlant() public ownsPlant returns (bool success) {
         require(block.timestamp >= cooldowns[msg.sender]);
         cooldowns[msg.sender] = block.timestamp + 1 days;

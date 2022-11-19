@@ -1,46 +1,21 @@
-const { Client, FileCreateTransaction, ContractCreateTransaction, ContractCallQuery, Hbar, ContractExecuteTransaction, ContractCreateFlow
- } = require("@hashgraph/sdk");
-require("dotenv").config();
+import { Client, ContractCallQuery, Hbar, ContractExecuteTransaction} from "@hashgraph/sdk";
 
-function init() {
-    //Grab your Hedera testnet account ID and private key from your .env file
-    const myAccountId = process.env.MY_ACCOUNT_ID;
-    const myPrivateKey = process.env.MY_PRIVATE_KEY;
+const myAccountId = "0.0.48924104";
+const myPrivateKey = "2cb3bd6ba377220406a5ae1151a9390728e37cbd518655ed6b5228de4ed7b03d";
+export const contractId = "0.0.48927934"
 
-    if (myAccountId == null || myPrivateKey == null ) {
-        throw new Error("Environment variables myAccountId and myPrivateKey must be present");
-    }
+export const client = Client.forTestnet();
+client.setOperator(myAccountId, myPrivateKey);
 
-    const client = Client.forTestnet();
-    client.setOperator(myAccountId, myPrivateKey);
-    return client
-}
 
-async function deployContract() {
-    const client = init()
-
-    let leaves = require("./Moneytrees.json");
-    const bytecode = leaves.bytecode;
-    
-    const contractCreate = new ContractCreateFlow()
-    .setGas(100000)
-    .setBytecode(bytecode);
-
-    const txResponse = await contractCreate.execute(client);
-    const receipt = await txResponse.getReceipt(client);
-    const newContractId = receipt.contractId;
-
-    return {client, newContractId}
-}
-
-async function getPlantData(client, contractId) {
+export async function getPlantData() {
     const contractQueryGrowth = await new ContractCallQuery()
     .setGas(100000)
     .setContractId(contractId)
     .setFunction("getPlantGrowth")
     .setQueryPayment(new Hbar(2));
     const getPlantGrowth = await contractQueryGrowth.execute(client);
-    const growthResponse = getPlantGrowth.getUint256(0)
+    const growthResponse = getPlantGrowth.getUint32(0)
     //Log the message
     console.log("Your plant growth: " + growthResponse);
 
@@ -60,14 +35,14 @@ async function getPlantData(client, contractId) {
     .setFunction("getPlantFeed")
     .setQueryPayment(new Hbar(2));
     const getPlantFeed = await contractQueryFeed.execute(client);
-    const feedResponse = getPlantFeed.getUint256(0)
+    const feedResponse = getPlantFeed.getUint32(0)
     //Log the message
     console.log("Your plant fed: " + feedResponse);
 
     return {watered: wateredResponse, growthStage: growthResponse, feedAmount: feedResponse}
 }
 
-async function createNewPlant(client, contractId) {
+export async function createNewPlant() {
     const contractExecTx = await new ContractExecuteTransaction()
     .setContractId(contractId)
     .setGas(1000000)
@@ -77,7 +52,30 @@ async function createNewPlant(client, contractId) {
     console.log("The transaction status is " +receipt.status.toString());
 }
 
-async function waterPlant(client, contractId) {
+export async function getBalance() {
+    const contractQueryBalance = await new ContractCallQuery()
+    .setGas(100000)
+    .setContractId(contractId)
+    .setFunction("balanceOf")
+    .setQueryPayment(new Hbar(2));
+    const getBalance = await contractQueryBalance.execute(client);
+    const balanceResponse = getBalance.getUint32(0);
+    return balanceResponse;
+    //Log the message
+}
+
+export async function hasPlant() {
+    const contractQueryGrowth = await new ContractCallQuery()
+    .setGas(100000)
+    .setContractId(contractId)
+    .setFunction("hasPlant")
+    .setQueryPayment(new Hbar(2));
+    const plantExists = await contractQueryGrowth.execute(client);
+    const response = plantExists.getBool(0)
+    return response
+}
+
+export async function waterPlant() {
     try {
     const contractExecTx = await new ContractExecuteTransaction()
     .setContractId(contractId)
@@ -91,7 +89,18 @@ async function waterPlant(client, contractId) {
     }
 }
 
-async function feedPlant(client, contractId) {
+export async function canWaterPlant() {
+    const contractQueryWater = await new ContractCallQuery()
+    .setGas(100000)
+    .setContractId(contractId)
+    .setFunction("canWater")
+    .setQueryPayment(new Hbar(2));
+    const canWater = await contractQueryWater.execute(client);
+    const response = canWater.getBool(0)
+    return response
+}
+
+export async function feedPlant() {
     const contractExecTx = await new ContractExecuteTransaction()
     .setContractId(contractId)
     .setGas(100000)
@@ -101,29 +110,3 @@ async function feedPlant(client, contractId) {
     console.log("The transaction status is " +receipt.status.toString());
 }
 
-async function main() {
-    
-    const {client, newContractId} = await deployContract()
-
-    await createNewPlant(client, newContractId)
-    setInterval(() => {
-        console.log("new run")
-        waterPlant(client, newContractId)
-        getPlantData(client, newContractId)
-    },10000)
-
-    // await feedPlant(client, newContractId)
-    // const contractQuery = await new ContractCallQuery()
-    // .setGas(100000)
-    // .setContractId(newContractId)
-    // .setFunction("balanceOf" )
-    // .setQueryPayment(new Hbar(2));
-    // const getMessage = await contractQuery.execute(client);
-    // const message = getMessage.getInt128(0);
-    // //Log the message
-    // console.log("Your balance: " + message);
-
-    // await getPlantData(client, newContractId)
-}
-
-main();
