@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 
 export const Example = (props) => {
   const constraintsRef = useRef(null);
+  const [catchOff, setCatchOff] = React.useState(true)
 
   return (
     <div>
       <div className="econtainer">
       <motion.div className="container" ref={constraintsRef}>
-        <motion.div className="item" drag dragConstraints={constraintsRef} />
+        {!catchOff && <motion.div className="item" drag dragConstraints={constraintsRef} />}
       </motion.div>
       <div className="container-bottom" >
       {(props.plantExists && props.plant) && (
@@ -20,10 +21,10 @@ export const Example = (props) => {
                 </div>
             )}
       <div className="buttons">        
-        <button className="mainButton" disabled={!props.canWater} onClick={props.water}>Water</button>                
-        <button className="mainButton" onClick={props.feed}>Feed</button>                
-        <button className="mainButton">Catch</button>      
-        <button className="mainButton">Donate</button>   
+      {catchOff && <button className="mainButton" disabled={!props.canWater} onClick={props.water}>Water</button>                }
+      {catchOff && <button className="mainButton" onClick={props.feed}>Feed</button>                }
+      {catchOff && <button onClick={() => {setCatchOff(false)}} className="mainButton">Catch</button>      }
+      {catchOff && <button className="mainButton">Donate</button>   }
       </div>
       </div>
       </div>
