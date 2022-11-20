@@ -9,7 +9,7 @@ contract Leaves {
     function balanceOf() public view returns (uint) {
         return balances[msg.sender];
     }
-    function transferTo(address _to, uint _value) public returns (bool success) {
+    function transferTo(address _to, uint32 _value) public returns (bool success) {
         require(balances[msg.sender] >= _value);
         balances[msg.sender] -= _value;
         balances[_to] += _value;
@@ -22,6 +22,14 @@ contract Leaves {
     function spend(address _user, uint _value) internal returns (bool success) {
         require(balances[_user] >= _value);
         balances[_user] -= _value;
+        return true;
+    }
+    function getAddress() public view returns (address) {
+        return msg.sender;
+    } 
+    function buy() public payable returns (bool success) {
+        require(msg.value >= 0);
+        balances[msg.sender] += 1;
         return true;
     }
 }
