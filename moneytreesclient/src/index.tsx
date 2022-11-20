@@ -66,9 +66,11 @@ const App = () => {
         }
     }
     async function createPlant() {
+        setLoading(true)
         await createNewPlant()
         setPlantExists(true)
         await fetchPlantData()
+        setLoading(false)
     }
     async function water() {
         try {
