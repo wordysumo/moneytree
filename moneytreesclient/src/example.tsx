@@ -10,19 +10,21 @@ import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
 import Tooltip from '@mui/material/Tooltip';
 import TimerIcon from '@mui/icons-material/Timer';
-import { RamenDining } from "@mui/icons-material";
+
 
 export const Example = (props) => {
   const constraintsRef = useRef(null);
   const [catchOff, setCatchOff] = useState(true)
   const [cooldownTimer, setCooldownTimer] = useState(0)
-  const [species, setSpecies] = useState("oak")        
+  const [species, setSpecies] = useState("oak") 
+// currently, it is using base case for tree type! easy to show off trees...
   const types = ["oak", "birch", "cherry"];
   
   const buttonProps ={
     margin: '5px',
     width: "200px"
   }
+
   useEffect(() => {
     if (props.cooldown !== 0) {
       console.log(props.cooldown)

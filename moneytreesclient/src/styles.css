@@ -5,7 +5,7 @@ body {
     padding: 0;
     margin: 0;
     perspective: 500px;
-    background: linear-gradient(180deg, rgb(93, 57, 35), rgb(100, 100, 100));
+    background: linear-gradient(180deg, rgb(120, 69, 37), rgb(97, 2, 2));
   }
   
 
@@ -27,7 +27,7 @@ body {
   }
 
 
-  .tree{
+  .tree{    
     margin: auto;
     height: 60%;
     width: 30vh;
@@ -42,17 +42,17 @@ body {
     place-items: center;
     overflow: hidden;
     text-align: center;
-    background: linear-gradient(180deg, rgb(93, 57, 35), rgb(100, 100, 100));    
+    background: linear-gradient(180deg, rgb(120, 69, 37), rgb(97, 2, 2));
     border-radius: 0px;
     justify-content: center;
     display: flex;
   }
   
-  .item {
+  .item {    
     width: 50px;
     height: 50px;
     border-radius: 100%;
-    background: radial-gradient(circle, rgb(246, 28, 162), rgba(246, 28, 162, 0.659));
+    background: radial-gradient(circle, rgb(255, 34, 170), rgba(255, 44, 174, 0.659));
 
     
   }
@@ -82,7 +82,7 @@ body {
   .mainButton{
     border-radius: 30%;
     position: relative;
-    background-color: #ffffffc2; /* Green */
+    background-color: #ffffffc2;
     border: none;
     color: rgba(0, 0, 0, 0.527);
     padding: 15px 32px;
@@ -97,7 +97,7 @@ body {
   .feed{
     border-radius: 30%;
     position: relative;
-    background-color: #ffffffc2; /* Green */
+    background-color: #ffffffc2;
     border: none;
     color: rgba(0, 0, 0, 0.527);
     padding: 15px 32px;
@@ -111,7 +111,7 @@ body {
   .catch{
     border-radius: 30%;
     position: relative;
-    background-color: #ffffffc2; /* Green */
+    background-color: #ffffffc2;
     border: none;
     color: rgba(0, 0, 0, 0.527);
     padding: 15px 32px;
@@ -125,7 +125,7 @@ body {
   .donate{
     border-radius: 30%;
     position: relative;
-    background-color: #ffffffc2; /* Green */
+    background-color: #ffffffc2;
     border: none;
     color: rgba(0, 0, 0, 0.527);
     padding: 15px 32px;
