@@ -28,12 +28,15 @@ export const Example = (props) => {
       console.log(props.cooldown)
       let rand = Math.random() * types.length
       rand = Math.floor(rand)
+      console.log(props.plant.id)
       setSpecies(types[rand])  
+      setCooldownTimer(props.cooldown - (Date.now() / 1000))
       setInterval(() => {
         setCooldownTimer(props.cooldown - (Date.now() / 1000))
       },6000)
     }
-  },[])
+  },[props.cooldown])
+
 
   async function transfer() {
     const address = prompt("account address")

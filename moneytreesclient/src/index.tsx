@@ -2,9 +2,11 @@ import * as React from "react";
 import { render } from "react-dom";
 import { Example } from "./example";
 import "./styles.css";
-import {getPlantData, waterPlant, createNewPlant, hasPlant, getBalance, canWaterPlant, feedPlant, getCurrentCooldown, resetPlant, transferLeaves, getMyAddress, getHbarBalance} from "./contract/contract.js";
+import {getPlantData, waterPlant, createNewPlant, hasPlant, getBalance, canWaterPlant, feedPlant, getCurrentCooldown, resetPlant, transferLeaves, getMyAddress, getHbarBalance, buyLeaves} from "./contract/contract.js";
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import { Stack } from "@mui/system";
+import Button from '@mui/material/Button';
+
 
 interface Plant {
     watered: boolean,
@@ -83,6 +85,17 @@ const App = () => {
             console.log(cooldown)
         }
     }
+    async function buyCurrency() {
+        await buyLeaves()
+        setBalance(await getBalance())
+        const _hBalance = await getHbarBalance()
+        setHBalance(_hBalance)
+    }
+
+    async function transfer(destination, amount) {
+        await transferLeaves(destination, amount)
+        setBalance(await getBalance())
+    }
     
     return (
         <div>  
@@ -92,12 +105,13 @@ const App = () => {
                 <EnergySavingsLeafIcon />
                 </Stack>
                 <h2>balance: {hBalance} H</h2>
+                <Button variant="outlined" color="primary" onClick={buyCurrency}>buy</Button>
                 
             </div>
             
             
 
-            <Example plant={plant} plantExists={plantExists} cooldown={cooldown} water={water} feed={feed} canWater={canWater} create={createPlant} transfer={transferLeaves} />
+            <Example plant={plant} plantExists={plantExists} cooldown={cooldown} water={water} feed={feed} canWater={canWater} create={createPlant} transfer={transfer} />
         </div>
     )
 

@@ -176,3 +176,15 @@ export async function getHbarBalance() {
     return accountBalance.hbars.toBigNumber().toNumber()
 }
 
+export async function buyLeaves() {
+    const contractExecTx = await new ContractExecuteTransaction()
+    .setContractId(contractId)
+    .setGas(100000)
+    .setPayableAmount(new Hbar(1))
+    .setFunction("buy");
+    const submitExecTx = await contractExecTx.execute(client);
+    console.log(submitExecTx)
+    const receipt = await submitExecTx.getReceipt(client);
+    console.log(receipt)
+    console.log("The transaction status is " +receipt.status.toString());
+}
