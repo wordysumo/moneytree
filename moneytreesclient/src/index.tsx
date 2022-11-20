@@ -107,12 +107,12 @@ const App = () => {
     return (
         <div>  
             <div className="balance">
+                <h1>Wallet</h1>
                 <Stack direction='row'>
-                <h2>balance: {balance}</h2>
-                <EnergySavingsLeafIcon />
+                <h2>{balance} <EnergySavingsLeafIcon /></h2>                
                 </Stack>
-                <h2>balance: {hBalance} H</h2>
-                <Button variant="outlined" color="primary" onClick={buyCurrency}>buy</Button>
+                <h2>{Math.floor(hBalance)} H</h2>
+                <Button variant="outlined" color="primary" onClick={buyCurrency}>buy <EnergySavingsLeafIcon /></Button>
                 
             </div>
             

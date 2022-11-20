@@ -10,6 +10,7 @@ import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
 import Tooltip from '@mui/material/Tooltip';
 import TimerIcon from '@mui/icons-material/Timer';
+import ForestIcon from '@mui/icons-material/Forest';
 
 
 export const Example = (props) => {
@@ -50,12 +51,12 @@ export const Example = (props) => {
     <div>
       <div className="econtainer">            
       <motion.div className="container" ref={constraintsRef}>              
-      {(props.plant && props.plant.growthStage === 0) && <img className="tree" src={require('./images/' + species + '_seed.png')} alt="tree"></img>   }                   
-      {(props.plant && props.plant.growthStage === 1) && <img className="tree" src={require('./images/' + species + '_sprout.png')} alt="tree"></img>   }                   
-      {(props.plant && props.plant.growthStage === 2) && <img className="tree" src={require('./images/' + species + '_junior.png')} alt="tree"></img>   }                   
-      {(props.plant && props.plant.growthStage === 3) && <img className="tree" src={require('./images/' + species + '_senior.png')} alt="tree"></img>   }                   
-      {(props.plant && props.plant.growthStage === 4) && <img className="tree" src={require('./images/' + species + '_tree.png')} alt="tree"></img>   }
         {!catchOff && <motion.div className="item" drag dragConstraints={constraintsRef} />}
+        {(props.plant && props.plant.growthStage === 0) && <img className="tree" src={require('./images/' + species + '_seed.png')} alt="tree"></img>   }                   
+        {(props.plant && props.plant.growthStage === 1) && <img className="tree" src={require('./images/' + species + '_sprout.png')} alt="tree"></img>   }                   
+        {(props.plant && props.plant.growthStage === 2) && <img className="tree" src={require('./images/' + species + '_junior.png')} alt="tree"></img>   }                   
+        {(props.plant && props.plant.growthStage === 3) && <img className="tree" src={require('./images/' + species + '_senior.png')} alt="tree"></img>   }                   
+        {(props.plant && props.plant.growthStage === 4) && <img className="tree" src={require('./images/' + species + '_tree.png')} alt="tree"></img>   }                
       </motion.div>            
       <div className="container-bottom" >
         <div className="menu-right">
@@ -64,7 +65,7 @@ export const Example = (props) => {
       {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" disabled={!props.canWater} onClick={props.water}>Water</Button>  }              
         {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained"  onClick={props.feed}>Feed</Button>   }             
         {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" onClick={() => {setCatchOff(false)}} >Catch</Button>      }
-        {(props.plantExists && catchOff) && <Button onClick={props.donate} sx={buttonProps} variant="contained" >Donate</Button> }  
+        {(props.plantExists && catchOff) && <Button onClick={props.donate} sx={buttonProps} variant="contained" >Donate  <ForestIcon/> </Button> }  
         {(props.plantExists && !catchOff) && <Button sx={buttonProps} variant="contained" onClick={() => {setCatchOff(true)}} >Return</Button>      }
         {(!props.plantExists) && <Button variant="contained" onClick={props.create} >create plant</Button>}
       </div>
@@ -72,7 +73,7 @@ export const Example = (props) => {
       </div>
       </div>
       {props.plant && <div className="stage-progress">
-        <h1>Progress to next stage</h1>
+        <h1></h1>
         <LinearProgress variant="determinate" value={(props.plant.feedAmount / ((props.plant.growthStage + 1) * 5)) * 100} />
       </div>}
       <div className="transfer-fab">
