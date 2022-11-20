@@ -6,6 +6,8 @@ import {getPlantData, waterPlant, createNewPlant, hasPlant, getBalance, canWater
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import { Stack } from "@mui/system";
 import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+
 
 
 interface Plant {
@@ -24,6 +26,7 @@ const App = () => {
     const [canWater, setCanWater] = React.useState(false)
     const [cooldown, setCooldown] = React.useState(0)
     const [myAddress, setMyAddress] = React.useState("")
+    const [thanks, setThanks] = React.useState(false)
     React.useEffect(() => {
         async function load() {
             const address = await getMyAddress()
@@ -99,6 +102,7 @@ const App = () => {
     async function donate() {
         await donateLeaves()
         setBalance(await getBalance())
+        setThanks(true)
     }
     return (
         <div>  
@@ -115,6 +119,14 @@ const App = () => {
             
 
             <Example plant={plant} plantExists={plantExists} cooldown={cooldown} water={water} feed={feed} canWater={canWater} create={createPlant} transfer={transfer} donate={donate} />
+            <Snackbar
+        open={thanks}
+        autoHideDuration={6000}
+        onClose={() => {
+            setThanks(false)
+        }}
+        message="Thank you for your donation"
+      />
         </div>
     )
 
