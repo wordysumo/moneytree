@@ -8,6 +8,7 @@ contract Moneytrees is Leaves {
         bool watered;
         uint growthStage;
         uint feedAmount;
+        uint lastWatered;
     }
     mapping (address => uint) ownerPlant;
     mapping(address => uint) cooldowns;
@@ -21,7 +22,7 @@ contract Moneytrees is Leaves {
     function createPlant() public returns (bool success) {
         require(ownerPlant[msg.sender] == 0,"User already has plant");
         uint newId = plants.length + 1;
-        Plant memory newPlant = Plant(newId,false,0,0);
+        Plant memory newPlant = Plant(newId,false,0,0,0);
         plants.push(newPlant);
         ownerPlant[msg.sender] = newId;
         return true;
@@ -35,6 +36,7 @@ contract Moneytrees is Leaves {
         uint id = ownerPlant[msg.sender];
         Plant storage currentPlant = plants[id - 1];
         currentPlant.watered = true;
+        currentPlant.lastWatered = block.timestamp;
         getDailyCoins();
         return true;
     }
@@ -58,6 +60,15 @@ contract Moneytrees is Leaves {
         }
         return true;
     }
+    function resetPlant() public ownsPlant returns (bool success) {
+        uint id = ownerPlant[msg.sender];
+        Plant storage currentPlant = plants[id - 1];
+        currentPlant.growthStage = 0;
+        currentPlant.feedAmount = 0;
+        currentPlant.lastWatered = 0;
+        currentPlant.watered = false;
+        return true;
+    }
     function getPlantWatered() public view returns (bool) {
         return plants[ownerPlant[msg.sender] - 1].watered;
     }
@@ -66,5 +77,8 @@ contract Moneytrees is Leaves {
     }
     function getPlantFeed() public view returns (uint) {
         return plants[ownerPlant[msg.sender] - 1].feedAmount;
+    }
+    function getPlantLastWatered() public view returns (uint) {
+        return plants[ownerPlant[msg.sender] - 1].lastWatered;
     }
 }

@@ -2,7 +2,7 @@ import { Client, ContractCallQuery, Hbar, ContractExecuteTransaction} from "@has
 
 const myAccountId = "0.0.48924104";
 const myPrivateKey = "2cb3bd6ba377220406a5ae1151a9390728e37cbd518655ed6b5228de4ed7b03d";
-export const contractId = "0.0.48927983"
+export const contractId = "0.0.48928255"
 
 export const client = Client.forTestnet();
 client.setOperator(myAccountId, myPrivateKey);
@@ -39,7 +39,17 @@ export async function getPlantData() {
     //Log the message
     console.log("Your plant fed: " + feedResponse);
 
-    return {watered: wateredResponse, growthStage: growthResponse, feedAmount: feedResponse}
+    const contractQueryLastWatered = await new ContractCallQuery()
+    .setGas(100000)
+    .setContractId(contractId)
+    .setFunction("getPlantLastWatered")
+    .setQueryPayment(new Hbar(2));
+    const getPlantLastWatered = await contractQueryLastWatered.execute(client);
+    const lastWateredResponse = getPlantLastWatered.getUint32(0)
+    //Log the message
+    console.log("Your plant last watered: " + lastWateredResponse);
+
+    return {watered: wateredResponse, growthStage: growthResponse, feedAmount: feedResponse, lastWatered: lastWateredResponse}
 }
 
 export async function createNewPlant() {
@@ -76,17 +86,13 @@ export async function hasPlant() {
 }
 
 export async function waterPlant() {
-    try {
     const contractExecTx = await new ContractExecuteTransaction()
     .setContractId(contractId)
-    .setGas(100000)
+    .setGas(1000000)
     .setFunction("waterPlant");
     const submitExecTx = await contractExecTx.execute(client);
     const receipt = await submitExecTx.getReceipt(client);
     console.log("The transaction status is " +receipt.status.toString());
-    } catch (err) {
-        console.log("already watered today")
-    }
 }
 
 export async function canWaterPlant() {
@@ -105,6 +111,27 @@ export async function feedPlant() {
     .setContractId(contractId)
     .setGas(100000)
     .setFunction("feedPlant");
+    const submitExecTx = await contractExecTx.execute(client);
+    const receipt = await submitExecTx.getReceipt(client);
+    console.log("The transaction status is " +receipt.status.toString());
+}
+
+export async function getCurrentCooldown() {
+    const contractQueryCooldown = await new ContractCallQuery()
+    .setGas(100000)
+    .setContractId(contractId)
+    .setFunction("getCooldown")
+    .setQueryPayment(new Hbar(2));
+    const cooldown = await contractQueryCooldown.execute(client);
+    const response = cooldown.getUint32(0)
+    return response
+}
+
+export async function resetPlant() {
+    const contractExecTx = await new ContractExecuteTransaction()
+    .setContractId(contractId)
+    .setGas(100000)
+    .setFunction("resetPlant");
     const submitExecTx = await contractExecTx.execute(client);
     const receipt = await submitExecTx.getReceipt(client);
     console.log("The transaction status is " +receipt.status.toString());
