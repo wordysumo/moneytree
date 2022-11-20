@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.da317d3e.css",
-    "main.js": "/static/js/main.d38d1134.js",
-    "static/media/birch_tree.png": "/static/media/birch_tree.e77836d2b7d91fd0d442.png",
-    "static/media/cherry_senior.png": "/static/media/cherry_senior.99df746b7e70a08db769.png",
-    "static/media/oak_tree.png": "/static/media/oak_tree.ffd9c1179c56b554c450.png",
-    "static/media/cherry_tree.png": "/static/media/cherry_tree.b6777a4fa87ff206111a.png",
-    "static/media/cherry_junior.png": "/static/media/cherry_junior.ff737e7acc3158d21e71.png",
-    "static/media/birch_senior.png": "/static/media/birch_senior.7731405e98b1a4828090.png",
-    "static/media/oak_senior.png": "/static/media/oak_senior.c7f4664d941cb42cd125.png",
-    "static/media/oak_junior.png": "/static/media/oak_junior.28ad4c5b8e319cd314b6.png",
-    "static/media/birch_junior.png": "/static/media/birch_junior.0f1902e2fa75046afd28.png",
-    "static/media/oak_sprout.png": "/static/media/oak_sprout.8f27fd3e1e5b7aeb036c.png",
-    "static/media/birch_sprout.png": "/static/media/birch_sprout.0b80776cad679be039e1.png",
-    "static/media/cherry_sprout.png": "/static/media/cherry_sprout.afe36dde6c4dab895502.png",
-    "static/media/oak_seed.png": "/static/media/oak_seed.397dbacc83a16b97b717.png",
-    "static/media/cherry_seed.png": "/static/media/cherry_seed.b80aba90a3eae0a68487.png",
-    "static/media/birch_seed.png": "/static/media/birch_seed.f470d88329a3d2f9af4a.png",
-    "index.html": "/index.html",
-    "main.da317d3e.css.map": "/static/css/main.da317d3e.css.map",
-    "main.d38d1134.js.map": "/static/js/main.d38d1134.js.map"
+    "main.css": "/moneytree/static/css/main.da317d3e.css",
+    "main.js": "/moneytree/static/js/main.ac34517d.js",
+    "static/media/birch_tree.png": "/moneytree/static/media/birch_tree.e77836d2b7d91fd0d442.png",
+    "static/media/cherry_senior.png": "/moneytree/static/media/cherry_senior.99df746b7e70a08db769.png",
+    "static/media/oak_tree.png": "/moneytree/static/media/oak_tree.ffd9c1179c56b554c450.png",
+    "static/media/cherry_tree.png": "/moneytree/static/media/cherry_tree.b6777a4fa87ff206111a.png",
+    "static/media/cherry_junior.png": "/moneytree/static/media/cherry_junior.ff737e7acc3158d21e71.png",
+    "static/media/birch_senior.png": "/moneytree/static/media/birch_senior.7731405e98b1a4828090.png",
+    "static/media/oak_senior.png": "/moneytree/static/media/oak_senior.c7f4664d941cb42cd125.png",
+    "static/media/oak_junior.png": "/moneytree/static/media/oak_junior.28ad4c5b8e319cd314b6.png",
+    "static/media/birch_junior.png": "/moneytree/static/media/birch_junior.0f1902e2fa75046afd28.png",
+    "static/media/oak_sprout.png": "/moneytree/static/media/oak_sprout.8f27fd3e1e5b7aeb036c.png",
+    "static/media/birch_sprout.png": "/moneytree/static/media/birch_sprout.0b80776cad679be039e1.png",
+    "static/media/cherry_sprout.png": "/moneytree/static/media/cherry_sprout.afe36dde6c4dab895502.png",
+    "static/media/oak_seed.png": "/moneytree/static/media/oak_seed.397dbacc83a16b97b717.png",
+    "static/media/cherry_seed.png": "/moneytree/static/media/cherry_seed.b80aba90a3eae0a68487.png",
+    "static/media/birch_seed.png": "/moneytree/static/media/birch_seed.f470d88329a3d2f9af4a.png",
+    "index.html": "/moneytree/index.html",
+    "main.da317d3e.css.map": "/moneytree/static/css/main.da317d3e.css.map",
+    "main.ac34517d.js.map": "/moneytree/static/js/main.ac34517d.js.map"
   },
   "entrypoints": [
     "static/css/main.da317d3e.css",
-    "static/js/main.d38d1134.js"
+    "static/js/main.ac34517d.js"
   ]
 }
