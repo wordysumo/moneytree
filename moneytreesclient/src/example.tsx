@@ -27,8 +27,8 @@ export const Example = (props) => {
     if (props.cooldown !== 0) {
       console.log(props.cooldown)
       let id = props.plant.id      
-      id % 2 === 0 && setSpecies(types[0])  
-      id % 2 !== 0 && setSpecies(types[1])  
+      id % 2 !== 0 && setSpecies(types[0])  
+      id % 2 === 0 && setSpecies(types[1])  
       id % 10 === 0 && setSpecies(types[2])
       setCooldownTimer(props.cooldown - (Date.now() / 1000))
       setInterval(() => {
