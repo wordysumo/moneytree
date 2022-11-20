@@ -67,6 +67,7 @@ contract Moneytrees is Leaves {
         currentPlant.feedAmount = 0;
         currentPlant.lastWatered = 0;
         currentPlant.watered = false;
+        cooldowns[msg.sender] = 0;
         return true;
     }
     function getPlantWatered() public view returns (bool) {

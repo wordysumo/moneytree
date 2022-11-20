@@ -2,7 +2,7 @@ import { Client, ContractCallQuery, Hbar, ContractExecuteTransaction, ContractFu
 
 const myAccountId = "0.0.48924104";
 const myPrivateKey = "2cb3bd6ba377220406a5ae1151a9390728e37cbd518655ed6b5228de4ed7b03d";
-export const contractId = "0.0.48928287"
+export const contractId = "0.0.48928305"
 
 export const client = Client.forTestnet();
 client.setOperator(myAccountId, myPrivateKey);

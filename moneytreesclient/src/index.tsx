@@ -43,6 +43,7 @@ const App = () => {
         const newPlant = await getPlantData()
         setPlant(newPlant)
         await updateCanWater()
+        console.log(Math.floor(((Date.now() / 1000) - newPlant.lastWatered) / 3600))
         if (Math.floor(((Date.now() / 1000) - newPlant.lastWatered) / 3600) >= 1 && newPlant.lastWatered !== 0) {
             alert("you didn't water your plant and it died")
             await resetPlant()
