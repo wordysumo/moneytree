@@ -11,6 +11,9 @@ export const Example = (props) => {
   const constraintsRef = useRef(null);
   const [catchOff, setCatchOff] = useState(true)
   const [cooldownTimer, setCooldownTimer] = useState(0)
+  const [species, setSpecies] = useState("")        
+  const types = ["oak", "birch", "cherry"];
+  setSpecies(types[Math.floor(Math.random() * types.length)])  
   const buttonProps ={
     margin: '5px'
   }
@@ -27,11 +30,11 @@ export const Example = (props) => {
     <div>
       <div className="econtainer">            
       <motion.div className="container" ref={constraintsRef}>              
-      {(props.plant.growthStage === 0) && <img className="tree" src={require('./images/oak_seed.png')} alt="tree"></img>   }                   
-      {(props.plant.growthStage === 1) && <img className="tree" src={require('./images/oak_sprout.png')} alt="tree"></img>   }                   
-      {(props.plant.growthStage === 2) && <img className="tree" src={require('./images/oak_junior.png')} alt="tree"></img>   }                   
-      {(props.plant.growthStage === 3) && <img className="tree" src={require('./images/oak_senior.png')} alt="tree"></img>   }                   
-      {(props.plant.growthStage === 4) && <img className="tree" src={require('./images/oak_tree.png')} alt="tree"></img>   }                   
+      {(props.plant.growthStage === 0) && <img className="tree" src={require('./images/' + {species} + '_seed.png')} alt="tree"></img>   }                   
+      {(props.plant.growthStage === 1) && <img className="tree" src={require('./images/' + {species} + '_sprout.png')} alt="tree"></img>   }                   
+      {(props.plant.growthStage === 2) && <img className="tree" src={require('./images/' + {species} + '_junior.png')} alt="tree"></img>   }                   
+      {(props.plant.growthStage === 3) && <img className="tree" src={require('./images/' + {species} + '_senior.png')} alt="tree"></img>   }                   
+      {(props.plant.growthStage === 4) && <img className="tree" src={require('./images/' + {species} + '_tree.png')} alt="tree"></img>   }
         {!catchOff && <motion.div className="item" drag dragConstraints={constraintsRef} />}
       </motion.div>            
       <div className="container-bottom" >
