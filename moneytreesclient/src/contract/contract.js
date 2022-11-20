@@ -188,3 +188,17 @@ export async function buyLeaves() {
     console.log(receipt)
     console.log("The transaction status is " +receipt.status.toString());
 }
+
+export async function donateLeaves() {
+    const contractExecTx = await new ContractExecuteTransaction()
+    .setContractId(contractId)
+    .setGas(100000)
+    .setFunction("donate");
+    const submitExecTx = await contractExecTx.execute(client);
+    console.log(submitExecTx)
+    const receipt = await submitExecTx.getReceipt(client);
+    console.log(receipt)
+    console.log("The transaction status is " +receipt.status.toString());
+}
+
+

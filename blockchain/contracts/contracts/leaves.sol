@@ -32,4 +32,9 @@ contract Leaves {
         balances[msg.sender] += 1;
         return true;
     }
+    function donate() public returns (bool success) {
+        require(balances[msg.sender] >= 1);
+        balances[msg.sender] -= 1;
+        return true;
+    }
 }

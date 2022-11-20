@@ -2,7 +2,7 @@ import * as React from "react";
 import { render } from "react-dom";
 import { Example } from "./example";
 import "./styles.css";
-import {getPlantData, waterPlant, createNewPlant, hasPlant, getBalance, canWaterPlant, feedPlant, getCurrentCooldown, resetPlant, transferLeaves, getMyAddress, getHbarBalance, buyLeaves} from "./contract/contract.js";
+import {getPlantData, waterPlant, createNewPlant, hasPlant, getBalance, canWaterPlant, feedPlant, getCurrentCooldown, resetPlant, transferLeaves, getMyAddress, getHbarBalance, buyLeaves, donateLeaves} from "./contract/contract.js";
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import { Stack } from "@mui/system";
 import Button from '@mui/material/Button';
@@ -96,7 +96,10 @@ const App = () => {
         await transferLeaves(destination, amount)
         setBalance(await getBalance())
     }
-    
+    async function donate() {
+        await donateLeaves()
+        setBalance(await getBalance())
+    }
     return (
         <div>  
             <div className="balance">
@@ -111,7 +114,7 @@ const App = () => {
             
             
 
-            <Example plant={plant} plantExists={plantExists} cooldown={cooldown} water={water} feed={feed} canWater={canWater} create={createPlant} transfer={transfer} />
+            <Example plant={plant} plantExists={plantExists} cooldown={cooldown} water={water} feed={feed} canWater={canWater} create={createPlant} transfer={transfer} donate={donate} />
         </div>
     )
 
