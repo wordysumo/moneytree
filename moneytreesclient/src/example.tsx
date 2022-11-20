@@ -37,18 +37,20 @@ export const Example = (props) => {
   }
 
   useEffect(() => {
-    if (props.cooldown !== 0) {
-      console.log(props.cooldown)
+    if (props.plant) {
       let id = props.plant.id      
       id % 2 !== 0 && setSpecies(types[0])  
       id % 2 === 0 && setSpecies(types[1])  
       id % 10 === 0 && setSpecies(types[2])
+    }
+    if (props.cooldown !== 0) {
+      console.log(props.cooldown)
       setCooldownTimer(props.cooldown - (Date.now() / 1000))
       setInterval(() => {
         setCooldownTimer(props.cooldown - (Date.now() / 1000))
       },6000)
     }
-  },[props.cooldown])
+  },[props.cooldown, props.plant])
 
 
   async function transfer() {
@@ -101,8 +103,8 @@ export const Example = (props) => {
       </div>
       </div>
       {props.plant && <div className="stage-progress">
-        <h1></h1>
-        <LinearProgress variant="determinate" value={(props.plant.feedAmount / ((props.plant.growthStage + 1) * 5)) * 100} />
+        <h3>{(props.plant.feedAmount / ((props.plant.growthStage + 1) * 5)) * 100}%</h3>
+        <LinearProgress sx={{width: "100%", height: "15px"}} variant="determinate" value={(props.plant.feedAmount / ((props.plant.growthStage + 1) * 5)) * 100} />
       </div>}
       <div className="transfer-fab">
         <Tooltip title="transfer leaves">

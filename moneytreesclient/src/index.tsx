@@ -36,6 +36,7 @@ const App = () => {
         async function load() {
             const address = await getMyAddress()
             setMyAddress(address)
+            console.log("address: " + address)
             const _hBalance = await getHbarBalance()
             setHBalance(_hBalance)
             const plantExistsRequest = await hasPlant()
