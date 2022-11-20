@@ -10,11 +10,15 @@ import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
 import Tooltip from '@mui/material/Tooltip';
 import TimerIcon from '@mui/icons-material/Timer';
+import { RamenDining } from "@mui/icons-material";
 
 export const Example = (props) => {
   const constraintsRef = useRef(null);
   const [catchOff, setCatchOff] = useState(true)
   const [cooldownTimer, setCooldownTimer] = useState(0)
+  const [species, setSpecies] = useState("oak")        
+  const types = ["oak", "birch", "cherry"];
+  
   const buttonProps ={
     margin: '5px',
     width: "200px"
@@ -22,11 +26,14 @@ export const Example = (props) => {
   useEffect(() => {
     if (props.cooldown !== 0) {
       console.log(props.cooldown)
+      let rand = Math.random() * types.length
+      rand = Math.floor(rand)
+      setSpecies(types[rand])  
       setInterval(() => {
         setCooldownTimer(props.cooldown - (Date.now() / 1000))
       },6000)
     }
-  },[props.cooldown])
+  },[])
 
   async function transfer() {
     const address = prompt("account address")
@@ -38,11 +45,11 @@ export const Example = (props) => {
     <div>
       <div className="econtainer">            
       <motion.div className="container" ref={constraintsRef}>              
-      {(props.plant && props.plant.growthStage === 0) && <img className="tree" src={require('./images/oak_seed.png')} alt="tree"></img>   }                   
-      {(props.plant && props.plant.growthStage === 1) && <img className="tree" src={require('./images/oak_sprout.png')} alt="tree"></img>   }                   
-      {(props.plant && props.plant.growthStage === 2) && <img className="tree" src={require('./images/oak_junior.png')} alt="tree"></img>   }                   
-      {(props.plant && props.plant.growthStage === 3) && <img className="tree" src={require('./images/oak_senior.png')} alt="tree"></img>   }                   
-      {(props.plant && props.plant.growthStage === 4) && <img className="tree" src={require('./images/oak_tree.png')} alt="tree"></img>   }                   
+      {(props.plant && props.plant.growthStage === 0) && <img className="tree" src={require('./images/' + species + '_seed.png')} alt="tree"></img>   }                   
+      {(props.plant && props.plant.growthStage === 1) && <img className="tree" src={require('./images/' + species + '_sprout.png')} alt="tree"></img>   }                   
+      {(props.plant && props.plant.growthStage === 2) && <img className="tree" src={require('./images/' + species + '_junior.png')} alt="tree"></img>   }                   
+      {(props.plant && props.plant.growthStage === 3) && <img className="tree" src={require('./images/' + species + '_senior.png')} alt="tree"></img>   }                   
+      {(props.plant && props.plant.growthStage === 4) && <img className="tree" src={require('./images/' + species + '_tree.png')} alt="tree"></img>   }
         {!catchOff && <motion.div className="item" drag dragConstraints={constraintsRef} />}
       </motion.div>            
       <div className="container-bottom" >
