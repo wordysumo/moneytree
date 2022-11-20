@@ -10,7 +10,8 @@ interface Plant {
     watered: boolean,
     feedAmount: number,
     growthStage: number,
-    lastWatered: number
+    lastWatered: number,
+    id: number
 }
 
 const App = () => {

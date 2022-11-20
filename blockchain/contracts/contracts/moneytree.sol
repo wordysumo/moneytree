@@ -82,4 +82,7 @@ contract Moneytrees is Leaves {
     function getPlantLastWatered() public view returns (uint) {
         return plants[ownerPlant[msg.sender] - 1].lastWatered;
     }
+    function getPlantId() public view returns (uint) {
+        return plants[ownerPlant[msg.sender] - 1].id;
+    }
 }

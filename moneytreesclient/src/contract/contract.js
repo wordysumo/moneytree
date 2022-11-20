@@ -2,7 +2,7 @@ import { Client, ContractCallQuery, Hbar, ContractExecuteTransaction, ContractFu
 
 const myAccountId = "0.0.48924104";
 const myPrivateKey = "2cb3bd6ba377220406a5ae1151a9390728e37cbd518655ed6b5228de4ed7b03d";
-export const contractId = "0.0.48928305"
+export const contractId = "0.0.48928312"
 
 export const client = Client.forTestnet();
 client.setOperator(myAccountId, myPrivateKey);
@@ -49,7 +49,17 @@ export async function getPlantData() {
     //Log the message
     console.log("Your plant last watered: " + lastWateredResponse);
 
-    return {watered: wateredResponse, growthStage: growthResponse, feedAmount: feedResponse, lastWatered: lastWateredResponse}
+    const contractQueryId = await new ContractCallQuery()
+    .setGas(100000)
+    .setContractId(contractId)
+    .setFunction("getPlantId")
+    .setQueryPayment(new Hbar(2));
+    const getPlantId = await contractQueryId.execute(client);
+    const IdResponse = getPlantId.getUint32(0)
+    //Log the message
+    console.log("Your plant id: " + IdResponse);
+
+    return {watered: wateredResponse, growthStage: growthResponse, feedAmount: feedResponse, lastWatered: lastWateredResponse, id: IdResponse}
 }
 
 export async function createNewPlant() {
