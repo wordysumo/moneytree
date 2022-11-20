@@ -63,9 +63,9 @@ export const Example = (props) => {
       <div className="buttons">    
       {props.plantExists && !props.canWater && <h1><TimerIcon />{Math.floor(cooldownTimer / 3600)} hours {Math.floor(cooldownTimer / 60) - Math.floor(cooldownTimer / 3600) * 60} minutes</h1> }   
       {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" disabled={!props.canWater} onClick={props.water}>Water</Button>  }              
-        {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained"  onClick={props.feed}>Feed</Button>   }             
+        {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" disabled={props.balance === 0}  onClick={props.feed}>Feed</Button>   }             
         {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" onClick={() => {setCatchOff(false)}} >Catch</Button>      }
-        {(props.plantExists && catchOff) && <Button onClick={props.donate} sx={buttonProps} variant="contained" >Donate  <ForestIcon/> </Button> }  
+        {(props.plantExists && catchOff) && <Button onClick={props.donate} sx={buttonProps} variant="contained" disabled={props.balance === 0} >Donate  <ForestIcon/> </Button> }  
         {(props.plantExists && !catchOff) && <Button sx={buttonProps} variant="contained" onClick={() => {setCatchOff(true)}} >Return</Button>      }
         {(!props.plantExists) && <Button variant="contained" onClick={props.create} >create plant</Button>}
       </div>

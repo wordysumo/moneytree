@@ -118,7 +118,7 @@ const App = () => {
             
             
 
-            <Example plant={plant} plantExists={plantExists} cooldown={cooldown} water={water} feed={feed} canWater={canWater} create={createPlant} transfer={transfer} donate={donate} />
+            <Example plant={plant} plantExists={plantExists} cooldown={cooldown} water={water} feed={feed} canWater={canWater} create={createPlant} transfer={transfer} donate={donate} balance={balance} />
             <Snackbar
         open={thanks}
         autoHideDuration={6000}
