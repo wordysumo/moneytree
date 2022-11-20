@@ -26,10 +26,10 @@ export const Example = (props) => {
   useEffect(() => {
     if (props.cooldown !== 0) {
       console.log(props.cooldown)
-      let rand = Math.random() * types.length
-      rand = Math.floor(rand)
-      console.log(props.plant.id)
-      setSpecies(types[rand])  
+      let id = props.plant.id      
+      id % 2 === 0 && setSpecies(types[0])  
+      id % 2 !== 0 && setSpecies(types[1])  
+      id % 10 === 0 && setSpecies(types[2])
       setCooldownTimer(props.cooldown - (Date.now() / 1000))
       setInterval(() => {
         setCooldownTimer(props.cooldown - (Date.now() / 1000))
