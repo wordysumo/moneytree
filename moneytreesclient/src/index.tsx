@@ -7,6 +7,9 @@ import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import { Stack } from "@mui/system";
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
+import LoadingButton from '@mui/lab/LoadingButton';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
@@ -26,7 +29,9 @@ const App = () => {
     const [canWater, setCanWater] = React.useState(false)
     const [cooldown, setCooldown] = React.useState(0)
     const [myAddress, setMyAddress] = React.useState("")
+    const [buyLoading, setBuyLoading] = React.useState(false)
     const [thanks, setThanks] = React.useState(false)
+    const [loading, setLoading] = React.useState(true)
     React.useEffect(() => {
         async function load() {
             const address = await getMyAddress()
@@ -41,6 +46,7 @@ const App = () => {
                 
             }
             setBalance(await getBalance())
+            setLoading(false)
         }
         load()
         
@@ -89,10 +95,12 @@ const App = () => {
         }
     }
     async function buyCurrency() {
+        setBuyLoading(true)
         await buyLeaves()
         setBalance(await getBalance())
         const _hBalance = await getHbarBalance()
         setHBalance(_hBalance)
+        setBuyLoading(false)
     }
 
     async function transfer(destination, amount) {
@@ -105,14 +113,20 @@ const App = () => {
         setThanks(true)
     }
     return (
-        <div>  
+        <div> 
+            <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop> 
             <div className="balance">
                 <h1>Wallet</h1>
                 <Stack direction='row'>
                 <h2>{balance} <EnergySavingsLeafIcon /></h2>                
                 </Stack>
                 <h2>{Math.floor(hBalance)} H</h2>
-                <Button variant="outlined" color="primary" onClick={buyCurrency}>buy <EnergySavingsLeafIcon /></Button>
+                <LoadingButton variant="outlined" color="primary" onClick={buyCurrency} loading={buyLoading}>buy <EnergySavingsLeafIcon /></LoadingButton>
                 
             </div>
             

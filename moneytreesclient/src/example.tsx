@@ -11,6 +11,13 @@ import SendIcon from '@mui/icons-material/Send';
 import Tooltip from '@mui/material/Tooltip';
 import TimerIcon from '@mui/icons-material/Timer';
 import ForestIcon from '@mui/icons-material/Forest';
+import ReactRain from 'react-rain-animation';
+import LoadingButton from '@mui/lab/LoadingButton';
+import Snackbar from '@mui/material/Snackbar';
+
+
+// import all the styles
+import "react-rain-animation/lib/style.css";
 
 
 export const Example = (props) => {
@@ -18,6 +25,9 @@ export const Example = (props) => {
   const [catchOff, setCatchOff] = useState(true)
   const [cooldownTimer, setCooldownTimer] = useState(0)
   const [species, setSpecies] = useState("oak") 
+  const [rain, setRain] = useState(false)
+  const [feedLoading, setFeedLoading] = useState(false)
+  const [transferSuccess, setTransferSuccess] = useState(false)
 // currently, it is using base case for tree type! easy to show off trees...
   const types = ["oak", "birch", "cherry"];
   
@@ -45,12 +55,30 @@ export const Example = (props) => {
     const address = prompt("account address")
     const amount = prompt("amount")
     await props.transfer(address, amount)
+    setTransferSuccess(true)
+  }
+
+  function water() {
+    setRain(true)
+    props.water()
+    setTimeout(() => {
+      setRain(false)
+    },5000)
+  }
+  async function feed() {
+    setFeedLoading(true);
+    await props.feed()
+    setFeedLoading(false)
   }
 
   return (
     <div>
-      <div className="econtainer">            
-      <motion.div className="container" ref={constraintsRef}>              
+      
+      <div className="econtainer">         
+      <motion.div className="container" ref={constraintsRef}>
+      {rain && <ReactRain
+          numDrops="50"
+        />  }              
         {!catchOff && <motion.div className="item" drag dragConstraints={constraintsRef} />}
         {(props.plant && props.plant.growthStage === 0) && <img className="tree" src={require('./images/' + species + '_seed.png')} alt="tree"></img>   }                   
         {(props.plant && props.plant.growthStage === 1) && <img className="tree" src={require('./images/' + species + '_sprout.png')} alt="tree"></img>   }                   
@@ -62,8 +90,8 @@ export const Example = (props) => {
         <div className="menu-right">
       <div className="buttons">    
       {props.plantExists && !props.canWater && <h1><TimerIcon />{Math.floor(cooldownTimer / 3600)} hours {Math.floor(cooldownTimer / 60) - Math.floor(cooldownTimer / 3600) * 60} minutes</h1> }   
-      {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" disabled={!props.canWater} onClick={props.water}>Water</Button>  }              
-        {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" disabled={props.balance === 0}  onClick={props.feed}>Feed</Button>   }             
+      {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" disabled={!props.canWater} onClick={water}>Water</Button>  }              
+        {(props.plantExists && catchOff) && <LoadingButton sx={buttonProps} variant="contained" disabled={props.balance === 0}  onClick={feed} loading={feedLoading}>Feed</LoadingButton>   }             
         {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" onClick={() => {setCatchOff(false)}} >Catch</Button>      }
         {(props.plantExists && catchOff) && <Button onClick={props.donate} sx={buttonProps} variant="contained" disabled={props.balance === 0} >Donate  <ForestIcon/> </Button> }  
         {(props.plantExists && !catchOff) && <Button sx={buttonProps} variant="contained" onClick={() => {setCatchOff(true)}} >Return</Button>      }
@@ -83,6 +111,12 @@ export const Example = (props) => {
       </Fab>
       </Tooltip>
       </div>
+      <Snackbar
+        open={transferSuccess}
+        autoHideDuration={6000}
+        onClose={() => {setTransferSuccess(false)}}
+        message="Transaction successful"
+      />
     </div>
   );
 };
