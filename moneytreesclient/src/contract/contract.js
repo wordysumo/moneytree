@@ -1,8 +1,8 @@
-import { Client, ContractCallQuery, Hbar, ContractExecuteTransaction} from "@hashgraph/sdk";
+import { Client, ContractCallQuery, Hbar, ContractExecuteTransaction, ContractFunctionParameters, AccountBalanceQuery} from "@hashgraph/sdk";
 
 const myAccountId = "0.0.48924104";
 const myPrivateKey = "2cb3bd6ba377220406a5ae1151a9390728e37cbd518655ed6b5228de4ed7b03d";
-export const contractId = "0.0.48928255"
+export const contractId = "0.0.48928287"
 
 export const client = Client.forTestnet();
 client.setOperator(myAccountId, myPrivateKey);
@@ -135,5 +135,34 @@ export async function resetPlant() {
     const submitExecTx = await contractExecTx.execute(client);
     const receipt = await submitExecTx.getReceipt(client);
     console.log("The transaction status is " +receipt.status.toString());
+}
+export async function transferLeaves(destination, amount) {
+    const contractExecTx = await new ContractExecuteTransaction()
+    .setContractId(contractId)
+    .setGas(100000)
+    .setFunction("transferTo",new ContractFunctionParameters().addAddress(destination).addUint32(amount));
+    const submitExecTx = await contractExecTx.execute(client);
+    console.log(submitExecTx)
+    const receipt = await submitExecTx.getReceipt(client);
+    console.log(receipt)
+    console.log("The transaction status is " +receipt.status.toString());
+}
+export async function getMyAddress() {
+    const contractQueryAddress = await new ContractCallQuery()
+    .setGas(100000)
+    .setContractId(contractId)
+    .setFunction("getAddress")
+    .setQueryPayment(new Hbar(2));
+    const cooldown = await contractQueryAddress.execute(client);
+    const response = cooldown.getAddress(0)
+    return response
+}
+
+export async function getHbarBalance() {
+    const accountBalanceQuery = new AccountBalanceQuery()
+     .setAccountId(myAccountId)
+    const accountBalance = await accountBalanceQuery.execute(client)
+    console.log(accountBalance.hbars)
+    return accountBalance.hbars.toBigNumber().toNumber()
 }
 

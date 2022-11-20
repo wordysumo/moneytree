@@ -7,6 +7,10 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import LinearProgress from '@mui/material/LinearProgress';
+import Fab from '@mui/material/Fab';
+import SendIcon from '@mui/icons-material/Send';
+import Tooltip from '@mui/material/Tooltip';
+import TimerIcon from '@mui/icons-material/Timer';
 
 
 
@@ -15,7 +19,8 @@ export const Example = (props) => {
   const [catchOff, setCatchOff] = useState(true)
   const [cooldownTimer, setCooldownTimer] = useState(0)
   const buttonProps ={
-    margin: '5px'
+    margin: '5px',
+    width: "200px"
   }
   useEffect(() => {
     if (props.cooldown !== 0) {
@@ -26,6 +31,12 @@ export const Example = (props) => {
     }
   },[props.cooldown])
 
+  async function transfer() {
+    const address = prompt("account address")
+    const amount = prompt("amount")
+    await props.transfer(address, amount)
+  }
+
   return (
     <div>
       <div className="econtainer">
@@ -33,20 +44,9 @@ export const Example = (props) => {
         {!catchOff && <motion.div className="item" drag dragConstraints={constraintsRef} />}
       </motion.div>
       <div className="container-bottom" >
-        <div className="menu-left">
-      {(props.plant) && (
-                <div className="plantData">
-                <Stack alignItems="center">
-                <Chip sx={{width: "200px", height: "50px", fontSize: "20px", margin: "10px"}} color="success" label={"growth: " + props.plant.growthStage}></Chip>
-                <Chip sx={{width: "200px", height: "50px", fontSize: "20px", margin: "10px"}} color="success" label={"fed: " + props.plant.feedAmount}></Chip>
-                <Chip sx={{width: "200px", height: "50px", fontSize: "20px", margin: "10px"}} color="success" label={"watered: " + props.plant.watered}></Chip>
-                </Stack>
-                </div>
-            )}
-        </div>
         <div className="menu-right">
       <div className="buttons">    
-      <h1>cooldown: {Math.floor(cooldownTimer / 3600)} hours {Math.floor(cooldownTimer / 60) - Math.floor(cooldownTimer / 3600) * 60} minutes</h1>    
+      <h1><TimerIcon />{Math.floor(cooldownTimer / 3600)} hours {Math.floor(cooldownTimer / 60) - Math.floor(cooldownTimer / 3600) * 60} minutes</h1>    
       {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" disabled={!props.canWater} onClick={props.water}>Water</Button>  }              
         {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained"  onClick={props.feed}>Feed</Button>   }             
         {(props.plantExists && catchOff) && <Button sx={buttonProps} variant="contained" onClick={() => {setCatchOff(false)}} >Catch</Button>      }
@@ -60,6 +60,13 @@ export const Example = (props) => {
         <h1>Progress to next stage</h1>
         <LinearProgress variant="determinate" value={(props.plant.feedAmount / ((props.plant.growthStage + 1) * 5)) * 100} />
       </div>}
+      <div className="transfer-fab">
+        <Tooltip title="transfer leaves">
+      <Fab onClick={transfer} color="primary">
+            <SendIcon />
+      </Fab>
+      </Tooltip>
+      </div>
     </div>
   );
 };
